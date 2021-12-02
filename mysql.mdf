@@ -1,0 +1,287 @@
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+--
+-- Host: localhost    Database: warehouse
+-- ------------------------------------------------------
+-- Server version	8.0.18
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Temporary view structure for view `t_join`
+--
+
+DROP TABLE IF EXISTS `t_join`;
+/*!50001 DROP VIEW IF EXISTS `t_join`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `t_join` AS SELECT 
+ 1 AS `w_no`,
+ 1 AS `a`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `t_joins`
+--
+
+DROP TABLE IF EXISTS `t_joins`;
+/*!50001 DROP VIEW IF EXISTS `t_joins`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `t_joins` AS SELECT 
+ 1 AS `s_no`,
+ 1 AS `a`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Temporary view structure for view `t_outs`
+--
+
+DROP TABLE IF EXISTS `t_outs`;
+/*!50001 DROP VIEW IF EXISTS `t_outs`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `t_outs` AS SELECT 
+ 1 AS `w_no`,
+ 1 AS `a`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `w_join`
+--
+
+DROP TABLE IF EXISTS `w_join`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `w_join` (
+  `j_no` varchar(20) NOT NULL,
+  `j_date` date NOT NULL,
+  `s_no` varchar(20) NOT NULL,
+  `w_no` varchar(20) NOT NULL,
+  `j_num` int(11) NOT NULL,
+  PRIMARY KEY (`j_no`),
+  KEY `s_no` (`s_no`),
+  KEY `w_no` (`w_no`),
+  CONSTRAINT `w_join_ibfk_1` FOREIGN KEY (`s_no`) REFERENCES `w_store` (`s_no`),
+  CONSTRAINT `w_join_ibfk_2` FOREIGN KEY (`w_no`) REFERENCES `w_ware` (`w_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `w_join`
+--
+
+LOCK TABLES `w_join` WRITE;
+/*!40000 ALTER TABLE `w_join` DISABLE KEYS */;
+INSERT INTO `w_join` VALUES ('RK001','2010-05-01','W01','S01',10),('RK0010','2010-06-02','W01','S01',15),('RK0011','2010-06-03','W01','S01',30),('RK0012','2010-06-03','W01','S02',10),('RK002','2010-05-01','W02','S02',50),('RK003','2010-05-01','W02','S03',10),('RK004','2010-05-02','W01','S01',30),('RK005','2010-05-03','W01','S01',20),('RK006','2010-05-03','W02','S03',30),('RK007','2010-06-01','W02','S02',15),('RK008','2010-06-01','W01','S02',25),('RK009','2010-06-01','W02','S03',5);
+/*!40000 ALTER TABLE `w_join` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `w_out`
+--
+
+DROP TABLE IF EXISTS `w_out`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `w_out` (
+  `o_no` varchar(20) NOT NULL,
+  `o_date` date NOT NULL,
+  `s_no` varchar(20) NOT NULL,
+  `w_no` varchar(20) NOT NULL,
+  `o_num` int(11) NOT NULL,
+  PRIMARY KEY (`o_no`),
+  KEY `s_no` (`s_no`),
+  KEY `w_no` (`w_no`),
+  CONSTRAINT `w_out_ibfk_1` FOREIGN KEY (`s_no`) REFERENCES `w_store` (`s_no`),
+  CONSTRAINT `w_out_ibfk_2` FOREIGN KEY (`w_no`) REFERENCES `w_ware` (`w_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `w_out`
+--
+
+LOCK TABLES `w_out` WRITE;
+/*!40000 ALTER TABLE `w_out` DISABLE KEYS */;
+INSERT INTO `w_out` VALUES ('CK001','2010-05-01','W01','S01',2),('CK002','2010-05-02','W01','S02',5),('CK003','2010-05-02','W02','S03',5),('CK004','2010-05-06','W02','S03',10);
+/*!40000 ALTER TABLE `w_out` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `w_store`
+--
+
+DROP TABLE IF EXISTS `w_store`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `w_store` (
+  `s_no` varchar(20) NOT NULL,
+  `s_name` varchar(20) NOT NULL,
+  `s_address` varchar(20) DEFAULT NULL,
+  `s_admin` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`s_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `w_store`
+--
+
+LOCK TABLES `w_store` WRITE;
+/*!40000 ALTER TABLE `w_store` DISABLE KEYS */;
+INSERT INTO `w_store` VALUES ('W01','显示器仓库','1号街','张三'),('W02','主板仓库',NULL,'李四'),('W03','硬盘仓库','3号街',NULL);
+/*!40000 ALTER TABLE `w_store` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `w_tpye`
+--
+
+DROP TABLE IF EXISTS `w_tpye`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `w_tpye` (
+  `t_no` varchar(20) NOT NULL,
+  `t_name` varchar(20) NOT NULL,
+  PRIMARY KEY (`t_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `w_tpye`
+--
+
+LOCK TABLES `w_tpye` WRITE;
+/*!40000 ALTER TABLE `w_tpye` DISABLE KEYS */;
+INSERT INTO `w_tpye` VALUES ('L01','显示器'),('L02','主板'),('L03','硬盘'),('L04','键盘');
+/*!40000 ALTER TABLE `w_tpye` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `w_unit`
+--
+
+DROP TABLE IF EXISTS `w_unit`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `w_unit` (
+  `u_no` varchar(20) NOT NULL,
+  `u_unit` varchar(20) NOT NULL,
+  PRIMARY KEY (`u_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `w_unit`
+--
+
+LOCK TABLES `w_unit` WRITE;
+/*!40000 ALTER TABLE `w_unit` DISABLE KEYS */;
+INSERT INTO `w_unit` VALUES ('J01','台'),('J02','块'),('J03','个');
+/*!40000 ALTER TABLE `w_unit` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `w_ware`
+--
+
+DROP TABLE IF EXISTS `w_ware`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `w_ware` (
+  `w_no` varchar(20) NOT NULL,
+  `w_name` varchar(20) NOT NULL,
+  `w_sp` varchar(20) NOT NULL,
+  `t_no` varchar(20) NOT NULL,
+  `u_no` varchar(20) NOT NULL,
+  PRIMARY KEY (`w_no`),
+  KEY `t_no` (`t_no`),
+  KEY `u_no` (`u_no`),
+  CONSTRAINT `w_ware_ibfk_1` FOREIGN KEY (`t_no`) REFERENCES `w_tpye` (`t_no`),
+  CONSTRAINT `w_ware_ibfk_2` FOREIGN KEY (`u_no`) REFERENCES `w_unit` (`u_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `w_ware`
+--
+
+LOCK TABLES `w_ware` WRITE;
+/*!40000 ALTER TABLE `w_ware` DISABLE KEYS */;
+INSERT INTO `w_ware` VALUES ('S01','三星显示器','SX','L01','J01'),('S02','冠捷显示器','GJ','L01','J01'),('S03','华硕主板','HS','L02','J02'),('S04','希捷硬盘','XJ','L03','J03'),('S05','日立硬盘','RL','L03','J03');
+/*!40000 ALTER TABLE `w_ware` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Final view structure for view `t_join`
+--
+
+/*!50001 DROP VIEW IF EXISTS `t_join`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `t_join` AS select `w_join`.`w_no` AS `w_no`,sum(`w_join`.`j_num`) AS `a` from `w_join` group by `w_join`.`w_no` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `t_joins`
+--
+
+/*!50001 DROP VIEW IF EXISTS `t_joins`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `t_joins` AS select `w_join`.`s_no` AS `s_no`,`w_join`.`w_no` AS `a` from `w_join` group by `w_join`.`s_no` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `t_outs`
+--
+
+/*!50001 DROP VIEW IF EXISTS `t_outs`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `t_outs` AS select `w_out`.`w_no` AS `w_no`,sum(`w_out`.`o_num`) AS `a` from `w_out` group by `w_out`.`w_no` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-01-09 15:31:31
